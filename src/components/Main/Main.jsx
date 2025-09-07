@@ -8,7 +8,7 @@ const Main = () => {
 
     const { prompt, setPrompt, response, setResponse } = useContext(Context);
 
-    const {recentprompt,setrecentprompt,showresult,setshowresult, loading,setloading,} = useContext(Context);
+    const { recentprompt, setrecentprompt, showresult, setshowresult, loading, setloading, } = useContext(Context);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +24,7 @@ const Main = () => {
         setPrompt("");
     };
 
-    
+
 
     return (
         <div className='main'>
@@ -33,52 +33,60 @@ const Main = () => {
                 <img width="40px" src={assets.user_image1} alt="" />
             </div>
 
-            
-         <div className="main-conatiner">
+
+            <div className="main-conatiner">
 
                 {!showresult
-                ?<>
-                    <div className="greet">
-                    <p><span>Hello! Dev</span></p>
-                    <p>What's on your mind today?</p>
-                </div>
+                    ? <>
+                        <div className="greet">
+                            <p><span>Hello! Dev</span></p>
+                            <p>What's on your mind today?</p>
+                        </div>
 
-                <div className="cards">
-                    <div className="card">
-                        <p>Suggest beautiful places to see on an upcoming road trip</p>
-                        <img src={assets.compass_icon} alt="" />
-                    </div>
+                        <div className="cards">
+                            <div className="card">
+                                <p>Suggest beautiful places to see on an upcoming road trip</p>
+                                <img src={assets.compass_icon} alt="" />
+                            </div>
 
-                    <div className="card">
-                        <p>Briefly summarize this concept: urban planning</p>
-                        <img src={assets.bulb_icon} alt="" />
-                    </div>
+                            <div className="card">
+                                <p>Briefly summarize this concept: urban planning</p>
+                                <img src={assets.bulb_icon} alt="" />
+                            </div>
 
-                    <div className="card">
-                        <p>Brainstorm team bonding activities for our work retreat</p>
-                        <img src={assets.message_icon} alt="" />
-                    </div>
+                            <div className="card">
+                                <p>Brainstorm team bonding activities for our work retreat</p>
+                                <img src={assets.message_icon} alt="" />
+                            </div>
 
-                    <div className="card">
-                        <p>Improve the readibility of the following code </p>
-                        <img src={assets.code_icon} alt="" />
+                            <div className="card">
+                                <p>Improve the readibility of the following code </p>
+                                <img src={assets.code_icon} alt="" />
+                            </div>
+                        </div>
+                    </>
+                    : <div className='result'>
+                        <div className="result-title">
+                            <img width="40px" src={assets.user_image1} alt="" />
+                            <p>{recentprompt}</p>
+                        </div>
+                        <div className="result-data">
+                            <img src={assets.gemini_icon} alt="" />
+                            {loading?
+                            <div className="loader">
+                               <hr />
+                               <hr />
+                               <hr />
+                            </div>
+                            :<p dangerouslySetInnerHTML={{ __html: response }}></p>
+                            }
+                            
+                        </div>
                     </div>
-                   </div>  
-                </>
-                :<div className='result'>
-                    <div className="result-title">
-                        <img width="40px" src={assets.user_image1} alt=""/>
-                        <p>{recentprompt}</p>
-                        </div> 
-                       <div className="result-data">
-                        <img src={assets.gemini_icon} alt=""/>
-                        <p dangerouslySetInnerHTML={{__html:response}}></p>
-                        </div> 
-                 </div>
                 }
 
-               
-                
+
+
 
                 <div className="main-bottom">
                     <form onSubmit={handleSubmit}>
