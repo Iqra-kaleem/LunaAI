@@ -10,13 +10,14 @@ const ContextProvider = (props) => {
   const [loading, setloading] = useState(false)
   const [prompt, setPrompt] = useState(""); //input
   const [response, setResponse] = useState("");
+  const [resultdata , setresultdata] = useState("");
 
 
   const contextvalue = {
     prompt, setPrompt, response, setResponse,
     recentprompt, setrecentprompt,
     prevprompts, setprevprompts, showresult, setshowresult,
-    loading, setloading,
+    loading, setloading,setresultdata,resultdata
   }
 
   return (

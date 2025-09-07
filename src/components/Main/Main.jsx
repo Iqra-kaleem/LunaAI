@@ -6,9 +6,18 @@ import { Context } from '../../context/appContext'
 
 const Main = () => {
 
-    const { prompt, setPrompt, response, setResponse } = useContext(Context);
+    const { prompt, setPrompt, response, setResponse} = useContext(Context);
 
-    const { recentprompt, setrecentprompt, showresult, setshowresult, loading, setloading, } = useContext(Context);
+    const { recentprompt, setrecentprompt, showresult, setshowresult, loading, setloading
+     } = useContext(Context);
+
+ 
+     const delayPara= (index, nextWord)=>{
+     setTimeout(function(){
+        setResponse(prev=>prev+nextWord);
+     },75*index)
+     }
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +28,31 @@ const Main = () => {
         setrecentprompt(prompt)
         const response = await generateGeminiResponse(prompt);
         console.log(response);
-        setResponse(response);
+
+        let responseArray = response.split("**");
+        let newResponse="";
+
+        for(let i=0; i< responseArray.length; i++)
+        {
+            if(i===0 || i%2 !== 1){
+                newResponse += responseArray[i];
+            }
+            else{
+                newResponse += "<b>"+responseArray[i]+"</b>";
+            }
+        }
+
+
+        let newRes2 = newResponse.split("*").join("<br/>")
+        let newResponseArray = newRes2.split(" ");
+
+
+        for(let i=0; i<newResponseArray.length; i++)
+        {
+            const nextWord = newResponseArray[i];
+            delayPara(i,nextWord+" ");
+        }
+
         setloading(false);
         setPrompt("");
     };
@@ -75,7 +108,7 @@ const Main = () => {
                             {loading?
                             <div className="loader">
                                <hr />
-                               <hr />
+                               <hr /> 
                                <hr />
                             </div>
                             :<p dangerouslySetInnerHTML={{ __html: response }}></p>
